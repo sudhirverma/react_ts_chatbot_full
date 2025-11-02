@@ -1,0 +1,155 @@
+{
+  "generated_at": "2025-11-01T08:56:34.818184Z",
+  "customers": [
+    {
+      "customer_id": "CUST001",
+      "auth_token_b64": "VGVzdEAx",
+      "name": "Alex Demo",
+      "dob": "1981-05-01",
+      "ssn_simulated": "SIM-SSN-101-21-3001",
+      "account": { "account_id": "ACCT001001", "routing_number": "RT200000001", "account_type": "savings", "balance": 5350.75, "currency": "USD" },
+      "contact": { "phone": "+1-555-1001", "email": "alex@demobank.test", "address": "101 Demo St, City1, ST" },
+      "transactions": [
+        { "tx_id": "TX0010", "date": "2025-01-01", "amount": 49, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0011", "date": "2025-02-02", "amount": 98, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0012", "date": "2025-03-03", "amount": 147, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST002",
+      "auth_token_b64": "VGVzdEAy",
+      "name": "Blake Demo",
+      "dob": "1982-05-02",
+      "ssn_simulated": "SIM-SSN-102-22-3002",
+      "account": { "account_id": "ACCT001002", "routing_number": "RT200000002", "account_type": "checking", "balance": 5701.5, "currency": "USD" },
+      "contact": { "phone": "+1-555-1002", "email": "blake@demobank.test", "address": "102 Demo St, City2, ST" },
+      "transactions": [
+        { "tx_id": "TX0020", "date": "2025-01-01", "amount": 48, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0021", "date": "2025-02-02", "amount": 96, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0022", "date": "2025-03-03", "amount": 144, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST003",
+      "auth_token_b64": "VGVzdEAz",
+      "name": "Casey Demo",
+      "dob": "1983-05-03",
+      "ssn_simulated": "SIM-SSN-103-23-3003",
+      "account": { "account_id": "ACCT001003", "routing_number": "RT200000003", "account_type": "savings", "balance": 6052.25, "currency": "USD" },
+      "contact": { "phone": "+1-555-1003", "email": "casey@demobank.test", "address": "103 Demo St, City3, ST" },
+      "transactions": [
+        { "tx_id": "TX0030", "date": "2025-01-01", "amount": 47, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0031", "date": "2025-02-02", "amount": 94, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0032", "date": "2025-03-03", "amount": 141, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST004",
+      "auth_token_b64": "VGVzdEA0",
+      "name": "Dana Demo",
+      "dob": "1984-05-04",
+      "ssn_simulated": "SIM-SSN-104-24-3004",
+      "account": { "account_id": "ACCT001004", "routing_number": "RT200000004", "account_type": "checking", "balance": 6403.0, "currency": "USD" },
+      "contact": { "phone": "+1-555-1004", "email": "dana@demobank.test", "address": "104 Demo St, City4, ST" },
+      "transactions": [
+        { "tx_id": "TX0040", "date": "2025-01-01", "amount": 46, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0041", "date": "2025-02-02", "amount": 92, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0042", "date": "2025-03-03", "amount": 138, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST005",
+      "auth_token_b64": "VGVzdEA1",
+      "name": "Elliot Demo",
+      "dob": "1985-05-05",
+      "ssn_simulated": "SIM-SSN-105-25-3005",
+      "account": { "account_id": "ACCT001005", "routing_number": "RT200000005", "account_type": "savings", "balance": 6753.75, "currency": "USD" },
+      "contact": { "phone": "+1-555-1005", "email": "elliot@demobank.test", "address": "105 Demo St, City5, ST" },
+      "transactions": [
+        { "tx_id": "TX0050", "date": "2025-01-01", "amount": 45, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0051", "date": "2025-02-02", "amount": 90, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0052", "date": "2025-03-03", "amount": 135, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST006",
+      "auth_token_b64": "VGVzdEA2",
+      "name": "Finley Demo",
+      "dob": "1986-05-06",
+      "ssn_simulated": "SIM-SSN-106-26-3006",
+      "account": { "account_id": "ACCT001006", "routing_number": "RT200000006", "account_type": "checking", "balance": 7104.5, "currency": "USD" },
+      "contact": { "phone": "+1-555-1006", "email": "finley@demobank.test", "address": "106 Demo St, City6, ST" },
+      "transactions": [
+        { "tx_id": "TX0060", "date": "2025-01-01", "amount": 44, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0061", "date": "2025-02-02", "amount": 88, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0062", "date": "2025-03-03", "amount": 132, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST007",
+      "auth_token_b64": "VGVzdEA3",
+      "name": "Harper Demo",
+      "dob": "1987-05-07",
+      "ssn_simulated": "SIM-SSN-107-27-3007",
+      "account": { "account_id": "ACCT001007", "routing_number": "RT200000007", "account_type": "savings", "balance": 7455.25, "currency": "USD" },
+      "contact": { "phone": "+1-555-1007", "email": "harper@demobank.test", "address": "107 Demo St, City7, ST" },
+      "transactions": [
+        { "tx_id": "TX0070", "date": "2025-01-01", "amount": 43, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0071", "date": "2025-02-02", "amount": 86, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0072", "date": "2025-03-03", "amount": 129, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST008",
+      "auth_token_b64": "VGVzdEA4",
+      "name": "Jamie Demo",
+      "dob": "1988-05-08",
+      "ssn_simulated": "SIM-SSN-108-28-3008",
+      "account": { "account_id": "ACCT001008", "routing_number": "RT200000008", "account_type": "checking", "balance": 7806.0, "currency": "USD" },
+      "contact": { "phone": "+1-555-1008", "email": "jamie@demobank.test", "address": "108 Demo St, City8, ST" },
+      "transactions": [
+        { "tx_id": "TX0080", "date": "2025-01-01", "amount": 42, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0081", "date": "2025-02-02", "amount": 84, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0082", "date": "2025-03-03", "amount": 126, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST009",
+      "auth_token_b64": "VGVzdEA5",
+      "name": "Logan Demo",
+      "dob": "1989-05-09",
+      "ssn_simulated": "SIM-SSN-109-29-3009",
+      "account": { "account_id": "ACCT001009", "routing_number": "RT200000009", "account_type": "savings", "balance": 8156.75, "currency": "USD" },
+      "contact": { "phone": "+1-555-1009", "email": "logan@demobank.test", "address": "109 Demo St, City9, ST" },
+      "transactions": [
+        { "tx_id": "TX0090", "date": "2025-01-01", "amount": 41, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0091", "date": "2025-02-02", "amount": 82, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0092", "date": "2025-03-03", "amount": 123, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    },
+    {
+      "customer_id": "CUST010",
+      "auth_token_b64": "VGVzdEAxMA==",
+      "name": "Morgan Demo",
+      "dob": "1990-05-010",
+      "ssn_simulated": "SIM-SSN-110-30-3010",
+      "account": { "account_id": "ACCT001010", "routing_number": "RT200000010", "account_type": "checking", "balance": 8507.5, "currency": "USD" },
+      "contact": { "phone": "+1-555-1010", "email": "morgan@demobank.test", "address": "110 Demo St, City10, ST" },
+      "transactions": [
+        { "tx_id": "TX0100", "date": "2025-01-01", "amount": 40, "description": "ATM", "counterparty": "DemoEntity1" },
+        { "tx_id": "TX0101", "date": "2025-02-02", "amount": 80, "description": "POS", "counterparty": "DemoEntity2" },
+        { "tx_id": "TX0102", "date": "2025-03-03", "amount": 120, "description": "CREDIT", "counterparty": "DemoEntity3" }
+      ],
+      "notes": "synthetic demo data - no real or personal information"
+    }
+  ]
+}
