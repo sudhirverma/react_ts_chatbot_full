@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ChatWindow from "./components/ChatWindow";
 import InputBar from "./components/InputBar";
 import { useChat } from "./hooks/useChat";
@@ -10,7 +10,7 @@ import {
 } from "./utils/customerStorage";
 import type { Customer } from "./types/customer";
 
-export default function App(): JSX.Element {
+export default function App(): any {
   // Load customers from local JSON
   const customers = (customersData as any).customers as Customer[];
 

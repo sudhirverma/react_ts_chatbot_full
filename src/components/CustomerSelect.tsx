@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import type { Customer } from "../types/customer";
 
 export default function CustomerSelect({
