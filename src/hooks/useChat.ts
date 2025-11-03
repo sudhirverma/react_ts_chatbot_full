@@ -81,7 +81,7 @@ export function useChat() {
 
       try {
         // delegate to your service (sendPrompt should handle the actual fetch/proxy/CORS)
-        const res = await sendPrompt(prompt, sessionId, {
+        const res: any = await sendPrompt(prompt, sessionId, {
           customerId,
           authTokenB64,
         });
