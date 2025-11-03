@@ -1,44 +1,67 @@
+// src/App.tsx
 import { useEffect, useMemo, useState } from "react";
 import ChatWindow from "./components/ChatWindow";
 import InputBar from "./components/InputBar";
 import { useChat } from "./hooks/useChat";
 import CustomerSelect from "./components/CustomerSelect";
+import PromptSelect from "./components/PromptSelect";
 import customersData from "./data/customers.json";
+import promptsData from "./data/prompts.json";
 import {
   getSelectedCustomerId,
   setSelectedCustomerId,
 } from "./utils/customerStorage";
 import type { Customer } from "./types/customer";
+import type { PromptItem } from "./components/PromptSelect";
 
 export default function App(): any {
-  // Load customers from local JSON
   const customers = (customersData as any).customers as Customer[];
 
-  // Get saved customer selection (if any)
-  const [selectedCustomerId, setSelectedCustomerIdState] = useState<string | null>(() => {
-    const stored = getSelectedCustomerId();
-    return stored ?? (customers.length > 0 ? customers[0].customer_id : null);
-  });
+  const [selectedCustomerId, setSelectedCustomerIdState] = useState<string | null>(
+    () => {
+      const stored = getSelectedCustomerId();
+      return stored ?? (customers.length > 0 ? customers[0].customer_id : null);
+    }
+  );
 
-  // Persist selected customer id in localStorage
   useEffect(() => {
     if (selectedCustomerId) setSelectedCustomerId(selectedCustomerId);
   }, [selectedCustomerId]);
 
-  // Derive selected customer object
   const selectedCustomer = useMemo(
     () => customers.find((c) => c.customer_id === selectedCustomerId) ?? null,
     [customers, selectedCustomerId]
   );
 
-  // useChat manages the conversation
+  // prompts
+  const prompts = (promptsData as any).prompts as PromptItem[];
+  const [selectedPromptId, setSelectedPromptId] = useState<string | null>(null);
+  const selectedPrompt = useMemo(
+    () => prompts.find((p) => p.id === selectedPromptId) ?? null,
+    [prompts, selectedPromptId]
+  );
+
+  // control input box content with this state
+  const [inputValue, setInputValue] = useState<string>("");
+
+  // when a prompt is selected, put its text into the input box
+  useEffect(() => {
+    if (selectedPrompt) {
+      setInputValue(selectedPrompt.prompt);
+    }
+  }, [selectedPrompt]);
+
   const { messages, loading, error, send, clear } = useChat();
 
-  // When customer changes, optionally reset the chat session if desired
-  useEffect(() => {
-    // You could clear messages automatically when switching customers if you want:
-    // clear();
-  }, [selectedCustomerId]);
+  // send should use current customer token & id
+  const handleSend = (promptText: string) => {
+    const token = selectedCustomer?.auth_token_b64;
+    const cid = selectedCustomer?.customer_id;
+    send(promptText, token, cid);
+    // clear selected prompt after sending (optional)
+    setSelectedPromptId(null);
+    setInputValue("");
+  };
 
   return (
     <div className="app">
@@ -49,7 +72,6 @@ export default function App(): any {
             : import.meta.env.VITE_APP_TITLE ?? "React Chat UI"}
         </h1>
 
-        {/* Dropdown for customer selection */}
         <div style={{ marginTop: 12 }}>
           <CustomerSelect
             customers={customers}
@@ -58,8 +80,17 @@ export default function App(): any {
           />
         </div>
 
-        {/* Display selected customer info */}
-        {selectedCustomer && (
+        {/* Prompt selector */}
+        <div style={{ marginTop: 12 }}>
+          <PromptSelect
+            prompts={prompts}
+            value={selectedPromptId}
+            onChange={(id) => setSelectedPromptId(id)}
+          />
+        </div>
+
+        {/* Info about selected prompt */}
+        {selectedPrompt && (
           <div
             style={{
               marginTop: 12,
@@ -68,17 +99,10 @@ export default function App(): any {
               background: "rgba(255,255,255,0.02)",
             }}
           >
-            <div style={{ fontSize: 13, color: "var(--muted)" }}>Selected</div>
-            <div style={{ fontWeight: 600, marginTop: 6 }}>
-              {selectedCustomer.name}
-            </div>
-            <div style={{ fontSize: 13, marginTop: 6 }}>
-              <div>
-                ID:{" "}
-                <code style={{ color: "var(--muted)" }}>
-                  {selectedCustomer.customer_id}
-                </code>
-              </div>
+            <div style={{ fontSize: 13, color: "var(--muted)" }}>Selected Prompt</div>
+            <div style={{ fontWeight: 600, marginTop: 6 }}>{selectedPrompt.label}</div>
+            <div style={{ fontSize: 13, marginTop: 6, whiteSpace: "pre-wrap" }}>
+              {selectedPrompt.prompt}
             </div>
           </div>
         )}
@@ -101,15 +125,12 @@ export default function App(): any {
           </div>
         )}
 
-        {/* Input bar sends chat requests with correct auth token */}
+        {/* Input bar is now controlled: show selected prompt text in the input */}
         <InputBar
-          onSend={(prompt) => {
-            // Always use current customer's token & id
-            const token = selectedCustomer?.auth_token_b64;
-            const cid = selectedCustomer?.customer_id;
-            send(prompt, token, cid);
-          }}
+          onSend={handleSend}
           disabled={loading}
+          value={inputValue}
+          onChange={(v) => setInputValue(v)}
         />
       </main>
     </div>
