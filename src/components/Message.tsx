@@ -1,6 +1,7 @@
 // src/components/Message.tsx
 import React, { useState } from "react";
 import type { Message as Msg } from "../types/chat";
+import { useDotsAnimation } from "../hooks/useDotsAnimation";
 
 const tryParseJson = (text: string) => {
   try {
@@ -23,7 +24,11 @@ const extractHumanMessage = (data: any): string | null => {
   }
 
   // 2) action_result.message
-  if (data.action_result && typeof data.action_result.message === "string" && data.action_result.message.trim()) {
+  if (
+    data.action_result &&
+    typeof data.action_result.message === "string" &&
+    data.action_result.message.trim()
+  ) {
     return data.action_result.message;
   }
 
@@ -40,7 +45,8 @@ const extractHumanMessage = (data: any): string | null => {
     const parts = [];
     if (r.name) parts.push(`Name: ${r.name}`);
     if (r.account_id) parts.push(`Account: ${r.account_id}`);
-    if (typeof r.balance !== "undefined") parts.push(`Balance: ${r.balance} ${r.currency ?? ""}`);
+    if (typeof r.balance !== "undefined")
+      parts.push(`Balance: ${r.balance} ${r.currency ?? ""}`);
     if (parts.length) return parts.join(" • ");
   }
 
@@ -83,6 +89,14 @@ const Message: React.FC<{ message: Msg }> = ({ message }) => {
 
   // If parsed JSON exists, attempt to grab a human-friendly sentence
   const humanText = parsed ? extractHumanMessage(parsed) : null;
+
+  // Animated text for temporary messages (e.g. isTemp === true)
+  // uses the useDotsAnimation hook to animate dots after base text
+  const animatedText = useDotsAnimation(
+    // Use provided text if present (e.g. "loading" or "loading info"), fallback to "loading"
+    typeof message.text === "string" && message.text.trim() ? message.text : "loading",
+    400
+  );
 
   // Helper to pretty-print the parsed JSON (if any)
   const prettyJson = (obj: any) => {
@@ -137,99 +151,121 @@ const Message: React.FC<{ message: Msg }> = ({ message }) => {
   return (
     <div className={`message ${isUser ? "user" : "assistant"}`} aria-label={message.role}>
       <div className="bubble">
-        {/* 1) If we extracted a clear human message, show it */}
-        {humanText ? (
+        {/* If this is a temporary message, show the animated typing/loading indicator */}
+        {message.isTemp ? (
           <>
-            <p style={{ whiteSpace: "pre-wrap" }}>{humanText}</p>
-
-            {/* Optionally render structured summary below if available */}
-            {parsed && renderStructured(parsed)}
-
-            <button
+            <p
               style={{
-                marginTop: 8,
-                padding: "6px 10px",
-                fontSize: 12,
-                borderRadius: 6,
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.04)",
-                color: "var(--muted)",
-                cursor: "pointer",
+                whiteSpace: "pre-wrap",
+                fontStyle: "italic",
+                color: "#fff",            // darker text
+                fontWeight: 500,          // makes it pop
+                letterSpacing: "0.3px"
               }}
-              onClick={() => setShowRaw((s) => !s)}
             >
-              {showRaw ? "Hide Raw" : "Show Raw"}
-            </button>
-
-            {showRaw && parsed && (
-              <pre
-                style={{
-                  marginTop: 8,
-                  background: "rgba(255,255,255,0.03)",
-                  padding: 8,
-                  borderRadius: 8,
-                  fontSize: 12,
-                  overflowX: "auto",
-                }}
-              >
-                {prettyJson(parsed)}
-              </pre>
-            )}
+              {animatedText}
+            </p>
+            <time style={{ display: "block", marginTop: 8 }}>{new Date(message.timestamp).toLocaleString()}</time>
           </>
-        ) : parsed ? (
-          // 2) parsed JSON exists but we couldn't find a human message -> show structured summary if possible
+        ) : (
           <>
-            {renderStructured(parsed) ?? (
+            {/* 1) If we extracted a clear human message, show it */}
+            {humanText ? (
               <>
-                <pre
+                <p style={{ whiteSpace: "pre-wrap" }}>{humanText}</p>
+
+                {/* Optionally render structured summary below if available */}
+                {parsed && renderStructured(parsed)}
+
+                <button
                   style={{
-                    whiteSpace: "pre-wrap",
-                    fontSize: 13,
-                    opacity: 0.95,
+                    marginTop: 8,
+                    padding: "6px 10px",
+                    fontSize: 12,
+                    borderRadius: 6,
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    background: "rgba(255,255,255,0.04)",
+                    color: "var(--muted)",
+                    cursor: "pointer",
                   }}
+                  onClick={() => setShowRaw((s) => !s)}
                 >
-                  {prettyJson(parsed)}
-                </pre>
+                  {showRaw ? "Hide Raw" : "Show Raw"}
+                </button>
+
+                {showRaw && parsed && (
+                  <pre
+                    style={{
+                      marginTop: 8,
+                      background: "rgba(255,255,255,0.03)",
+                      padding: 8,
+                      borderRadius: 8,
+                      fontSize: 12,
+                      overflowX: "auto",
+                    }}
+                  >
+                    {prettyJson(parsed)}
+                  </pre>
+                )}
+              </>
+            ) : parsed ? (
+              // 2) parsed JSON exists but we couldn't find a human message -> show structured summary if possible
+              <>
+                {renderStructured(parsed) ?? (
+                  <>
+                    <pre
+                      style={{
+                        whiteSpace: "pre-wrap",
+                        fontSize: 13,
+                        opacity: 0.95,
+                      }}
+                    >
+                      {prettyJson(parsed)}
+                    </pre>
+                  </>
+                )}
+
+                <button
+                  style={{
+                    marginTop: 8,
+                    padding: "6px 10px",
+                    fontSize: 12,
+                    borderRadius: 6,
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    background: "rgba(255,255,255,0.04)",
+                    color: "var(--muted)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowRaw((s) => !s)}
+                >
+                  {showRaw ? "Hide Raw" : "Show Raw"}
+                </button>
+
+                {showRaw && (
+                  <pre
+                    style={{
+                      marginTop: 8,
+                      background: "rgba(255,255,255,0.03)",
+                      padding: 8,
+                      borderRadius: 8,
+                      fontSize: 12,
+                      overflowX: "auto",
+                    }}
+                  >
+                    {prettyJson(parsed)}
+                  </pre>
+                )}
+              </>
+            ) : (
+              // 3) not JSON at all: show plain text
+              <>
+                <p style={{ whiteSpace: "pre-wrap" }}>{message.text}</p>
               </>
             )}
 
-            <button
-              style={{
-                marginTop: 8,
-                padding: "6px 10px",
-                fontSize: 12,
-                borderRadius: 6,
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.04)",
-                color: "var(--muted)",
-                cursor: "pointer",
-              }}
-              onClick={() => setShowRaw((s) => !s)}
-            >
-              {showRaw ? "Hide Raw" : "Show Raw"}
-            </button>
-
-            {showRaw && (
-              <pre
-                style={{
-                  marginTop: 8,
-                  background: "rgba(255,255,255,0.03)",
-                  padding: 8,
-                  borderRadius: 8,
-                  fontSize: 12,
-                  overflowX: "auto",
-                }}
-              >
-                {prettyJson(parsed)}
-              </pre>
-            )}
+            <time style={{ display: "block", marginTop: 8 }}>{new Date(message.timestamp).toLocaleString()}</time>
           </>
-        ) : (
-          // 3) not JSON at all: show plain text
-          <p style={{ whiteSpace: "pre-wrap" }}>{message.text}</p>
         )}
-
-        <time style={{ display: "block", marginTop: 8 }}>{new Date(message.timestamp).toLocaleString()}</time>
       </div>
     </div>
   );

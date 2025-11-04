@@ -69,7 +69,7 @@ export function useChat() {
       const tempMsg: Msg = {
         id: tempId,
         role: "assistant",
-        text: "Thinking...",
+        text: "Loading info...",
         timestamp: new Date().toISOString(),
         // mark temp so Message component can render skeleton
         // (add `isTemp?: boolean` to your Message type if not present)
